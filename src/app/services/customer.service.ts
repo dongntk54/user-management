@@ -11,9 +11,9 @@ export class CustomerService {
   baseUrl: string = 'http://localhost:3000/';
   constructor(private http: HttpClient) {}
 
-  getCustomers(): Observable<Customer[]> {
-    return this.http.get(this.baseUrl + 'api/customers') as Observable<
-      Customer[]
-    >;
+  getCustomers(skip: number, top: number): Observable<Customer[]> {
+    return this.http.get(
+      this.baseUrl + `api/customers/page/${skip * top}/${top}`
+    ) as Observable<Customer[]>;
   }
 }

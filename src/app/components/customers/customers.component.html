@@ -73,18 +73,24 @@
     </div>
     <div class="col-4">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Seach...." />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Seach...."
+          #searchEl
+          (keyup)="search(searchEl.value)"
+        />
       </div>
     </div>
   </div>
   <div class="row" *ngIf="mode === 'cardView'">
-    <div class="col-md-6 mb-3" *ngFor="let customer of customers">
+    <div class="col-md-6 mb-3" *ngFor="let customer of filteredCustomers">
       <div class="card">
         <div class="card-body p-0">
           <h5
             class="card-title p-1 bg-primary text-light d-flex justify-content-between align-items-center"
           >
-            <span>{{ customer.fullName }}</span>
+            <span class="text-capitalize">{{ customer.fullName }}</span>
             <a routerLink="{{ customer.id }}/edit" class="text-light pb-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +99,6 @@
                 fill="currentColor"
                 class="bi bi-pencil-square"
                 viewBox="0 0 16 16"
-                (click)="editUser()"
               >
                 <path
                   d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
@@ -133,6 +138,47 @@
       </div>
     </div>
   </div>
-
-  <div class="row" *ngIf="mode === 'listView'">List</div>
+  <div class="row" *ngIf="mode === 'listView'">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Order Total</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of filteredCustomers">
+            <td>
+              <a routerLink="{{ customer.id }}/details">{{
+                customer.firstName
+              }}</a>
+            </td>
+            <td>{{ customer.lastName }}</td>
+            <td>{{ customer.gender }}</td>
+            <td>{{ customer.address }}</td>
+            <td>{{ customer.city }}</td>
+            <td>{{ customer.state.name }}</td>
+            <td>{{ caculateOrderTotal(customer.orders) }}</td>
+            <td><a routerLink="{{ customer.id }}/orders">View Orders</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-pagination
+        [totalItems]="totalItems"
+        [itemsPerPage]="itemsPerPage"
+        (onPageChange)="handlePageChange($event)"
+      ></app-pagination>
+    </div>
+  </div>
 </div>

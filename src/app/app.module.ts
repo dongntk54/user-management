@@ -9,6 +9,7 @@ import { CustomersComponent } from './components/customers/customers.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PaginationComponent } from './components/commons/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     SettingsComponent,
     LoginComponent,
     NotFoundComponent,
+    PaginationComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],
